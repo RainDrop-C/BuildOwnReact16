@@ -1,5 +1,5 @@
 import { TAG_ROOT } from "./constants";
-import {scheduleRoot} from './schedule';
+import {scheduleRoot} from './scheduler';
 /**
  * render是要把一个元素渲染到一个容器内部
  * @param {*} element 元素

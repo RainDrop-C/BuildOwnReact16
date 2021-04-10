@@ -1,4 +1,6 @@
-import {ELEMENT_TEXT} from './constants'
+import {ELEMENT_TEXT} from './constants';
+import {UpdateQueue,Update} from './updateQueue'
+import { scheduleRoot, useReducer, useState } from './scheduler';
 /**
  * 创建元素（虚拟DOM）的方法
  * @param {*} type  元素的类型 div span p
@@ -34,7 +36,25 @@ function createElement(type,config,...children) {
     }
 }
 
+class Component {
+    constructor(props){
+        this.props = props;
+    //    this.updateQueue = new UpdateQueue(); 
+    }
+    setState(payload) { //对象或函数
+        let update = new Update(payload);
+        this.internalFiber.updateQueue.enqueueUpdate(update);
+        // this.updateQueue.enqueueUpdate(update);
+        scheduleRoot();//从根节点开始调度
+    }
+}
+
+Component.prototype.isReactComponent = {}; //类组件
+
 const React = {
     createElement,
+    Component,
+    useReducer,
+    useState
 }
 export default React;
